@@ -9,10 +9,13 @@ concurrent-connection cap.
 ## Status: core dependency
 
 This is **not** a staged or future-integration package. It is depended on
-directly by Perfect-Lasso, which runs the CWP Session Janitor as a background
-task against a real, live FileMaker Server. It is confirmed working in
-production: FileMaker Server is licensed for a maximum of 200 concurrent
-connections, and the Janitor is what keeps stuck/orphaned CWP sessions from
+directly by Perfect-Lasso — a Swift reimplementation of the Lasso language,
+still in active development and not yet production-ready — which runs the
+CWP Session Janitor as a background task against a real, live FileMaker
+Server during validation testing. It is confirmed working end-to-end
+against that real server: FileMaker Server is licensed for a maximum of
+200 concurrent connections, and the Janitor is what keeps stuck/orphaned
+CWP sessions from
 exhausting that cap.
 
 ## Requirements
