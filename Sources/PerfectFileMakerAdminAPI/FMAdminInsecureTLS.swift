@@ -3,6 +3,15 @@ import Foundation
 import FoundationNetworking
 #endif
 
+// Darwin-only: relies on `URLProtectionSpace.serverTrust`/`URLCredential(trust:)`,
+// which need the Security framework's SecTrust/SecIdentity primitives. Those are
+// not implemented in swift-corelibs-foundation on Linux (still open upstream as of
+// swiftlang/swift-corelibs-foundation#5157), so there is no equivalent to swap in —
+// this escape hatch simply doesn't exist on Linux. A Linux deployment against a
+// self-signed FileMaker Server must install that server's certificate into the
+// system CA trust store instead.
+#if canImport(Security)
+
 /// Accepts ANY server TLS certificate unconditionally, including self-signed
 /// ones — e.g. FileMaker Server's default "Claris Self Signed Certificate
 /// (Not for Production Use)". This is an explicit opt-in escape hatch for a
@@ -34,3 +43,5 @@ extension FMAdminClient {
         URLSession(configuration: .ephemeral, delegate: FMAdminInsecureTLSDelegate(), delegateQueue: nil)
     }
 }
+
+#endif
