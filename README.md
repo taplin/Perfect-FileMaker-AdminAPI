@@ -21,8 +21,14 @@ exhausting that cap.
 ## Requirements
 
 - Swift tools version **6.2**
-- **macOS 26** or later (`platforms: [.macOS(.v26)]`) — no iOS or other
-  platform is currently declared
+- **macOS 14.0 (Sonoma)** or later (`platforms: [.macOS(.v14)]`) — no iOS or
+  other platform is currently declared
+- **Linux**: builds, with one exception — `FMAdminInsecureTLSDelegate` (see
+  below) is Darwin-only, since it depends on Security-framework primitives
+  (`SecTrust`/`SecIdentity`) that `swift-corelibs-foundation` doesn't
+  implement on Linux. A Linux deployment against a self-signed FileMaker
+  Server certificate needs to install that certificate into the system CA
+  trust store instead of using the bypass delegate.
 
 ## Dependencies
 
@@ -58,6 +64,7 @@ session management can pull in just this package.
   FileMaker Server's default dev certificate. Not marked `Sendable` itself —
   `URLSessionDelegate` conformance has its own thread-safety contract
   independent of Swift's `Sendable` checking. Opt-in only; never the default.
+  **Darwin-only** (see Requirements above).
 
 ### CWP Session Janitor (policy layer)
 
