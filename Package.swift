@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "PerfectFileMakerAdminAPI",
-    platforms: [.macOS(.v14)],
+    platforms: [.macOS(.v12)],
     products: [
         .library(name: "PerfectFileMakerAdminAPI", targets: ["PerfectFileMakerAdminAPI"]),
     ],
